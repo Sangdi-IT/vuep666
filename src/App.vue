@@ -28,7 +28,7 @@
         :key="index"
         class="tag"
         @click="fillColumn(person)"
-        :class="{ 'disabled': personUsage[person] >= 5 }"
+        :class="{ 'disabled': personUsage[person] >= 6 }"
       >
         {{ person }} ({{ personUsage[person] }})
       </span>
@@ -41,7 +41,7 @@ export default {
   name: 'App',
   data() {
     return {
-      currentDate: '2月18日',
+      currentDate: '',
       selectedLocation: '天东',
       personnel: ['汪', '帆', '海', '娜', '杰', '昂', '扬', '尚', '俊', '巨', '亮'],
       schedules: [
@@ -75,6 +75,12 @@ export default {
       }
     };
   },
+  mounted() {
+    const today = new Date();
+    const month = today.getMonth() + 1; // 月份从0开始
+    const day = today.getDate();
+    this.currentDate = `${month}月${day}日`;
+  },
   methods: {
     setCurrentIndex(index,column) {
       this.currentIndex = index;
@@ -82,7 +88,7 @@ export default {
     },
     fillColumn(person) {
       console.log('Fill Column:', person);
-      if (this.currentIndex !== null && this.personUsage[person] < 5) {
+      if (this.currentIndex !== null && this.personUsage[person] < 6) {
         console.log('Current Index:', this.currentIndex);
         if (this.currentColumn === 'B') {
           this.schedules[this.currentIndex].b = person;
